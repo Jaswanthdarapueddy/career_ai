@@ -62,17 +62,22 @@ export default function ResultStep({ userData, aiResult, onBack }) {
         <div className="glass-panel" style={{ gridColumn: 'span 12', padding: '32px' }}>
           <h3 style={{ color: 'var(--accent-primary)', marginBottom: '16px' }}>Recommended Career Paths</h3>
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-            {career_roles?.map((role, i) => (
-              <div key={i} style={{
-                background: 'rgba(255,255,255,0.05)',
-                padding: '16px 24px',
-                borderRadius: '99px',
-                border: '1px solid rgba(255,255,255,0.1)',
-                fontWeight: 600
-              }}>
-                {role}
-              </div>
-            ))}
+            {career_roles && career_roles.length > 0 ? (
+              career_roles.map((role, i) => (
+                <div key={i} style={{
+                  background: 'rgba(255,255,255,0.05)',
+                  padding: '16px 24px',
+                  borderRadius: '99px',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  fontWeight: 600,
+                  color: '#fff'
+                }}>
+                  {role}
+                </div>
+              ))
+            ) : (
+              <p style={{ color: 'var(--text-muted)' }}>No specific roles found. Check roadmap below.</p>
+            )}
           </div>
         </div>
 
