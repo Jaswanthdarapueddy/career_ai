@@ -31,6 +31,7 @@
   /* Fonts */
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --accent-primary: var(--color-bone);
 }
 
 body {
@@ -42,6 +43,19 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+}
+
+/* Results */
+.resume-paper {
+  background: #fdfbf7;
+  color: #1a1a1a;
+  padding: 40px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
 }
 
 /* Cinematic Animated Gradient Background */
@@ -422,15 +436,7 @@ h4 {
 }
 
 /* Results */
-.resume-paper {
-  background: #fdfbf7;
-  color: #1a1a1a;
-  padding: 60px;
-  font-family: 'Times New Roman', serif;
-  line-height: 1.5;
-  white-space: pre-wrap;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-}
+
 
 /* Error State */
 .result-error {
