@@ -1,0 +1,15 @@
+
+--- Request received at 1768661721.3766422 ---
+store_user_profile took 0.61s
+Sending request to Relay...
+Relay request took 1.06s
+
+--- Request received at 1768661807.3360293 ---
+store_user_profile took 0.69s
+Sending request to Relay...
+Relay request took 1.32s
+
+--- Request received at 1768662076.7425122 ---
+store_user_profile took 3.89s
+Sending request to Relay...
+Relay request took 2.81s

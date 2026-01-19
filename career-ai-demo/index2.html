@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career AI Demo - Your Results</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            background-color: #f0f2f5;
+        }
+        .container {
+            max-width: 900px;
+        }
+        .card {
+            border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            font-size: 1.25rem;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        .card-header i {
+            margin-right: 1rem;
+        }
+        #processing {
+            text-align: center;
+            padding: 5rem 0;
+        }
+        #results {
+            display: none;
+        }
+        .results-header {
+            text-align: center;
+            padding: 2rem 0;
+            background-color: #007bff;
+            color: white;
+            margin-bottom: 3rem;
+        }
+        .results-header h1 {
+            margin: 0;
+            font-size: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5 mb-5">
+        <div id="processing">
+            <div class="spinner-border text-primary" style="width: 5rem; height: 5rem;" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <h2 class="mt-4">Our AI is crafting your personalized career plan...</h2>
+            <p class="text-muted">This may take a few moments.</p>
+        </div>
+
+        <div id="results">
+            <div class="results-header rounded">
+                 <h1>Your Future Awaits, <span id="userName"></span>!</h1>
+                 <p class="lead mb-0">Here is your personalized career plan based on your profile.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-user-check"></i> Your Profile
+                </div>
+                <div class="card-body p-4" id="userProfile">
+                    <!-- User details will be inserted here -->
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-compass"></i> Career Recommendation
+                </div>
+                <div class="card-body p-4" id="careerRecommendation">
+                    <!-- Career recommendation will be inserted here -->
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-file-alt"></i> Generated Resume
+                </div>
+                <div class="card-body p-4">
+                    <p class="card-text">A professional resume tailored to the recommended career path has been generated for you.</p>
+                    <a href="#" class="btn btn-primary"><i class="fas fa-download me-2"></i>Download Resume</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                   <i class="fas fa-award"></i> Certificates & Projects
+                </div>
+                <div class="card-body p-4">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong>Certificate:</strong> Full-Stack Web Development - A comprehensive certification covering front-end and back-end technologies.</li>
+                        <li class="list-group-item"><strong>Project:</strong> E-commerce Website - A hands-on project to build a fully functional online store.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-road"></i> Skill Roadmap
+                </div>
+                <div class="card-body p-4">
+                    <p class="card-text">To advance your career, we recommend focusing on the following skills:</p>
+                    <ul id="skillRoadmap">
+                        <!-- Skill roadmap will be inserted here -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Retrieve user data from localStorage
+            const userDetails = JSON.parse(localStorage.getItem('userDetails'));
+
+            if (userDetails) {
+                // Personalize the page
+                document.getElementById('userName').textContent = userDetails.fullName.split(' ')[0];
+
+                // Display user profile
+                const profileContainer = document.getElementById('userProfile');
+                profileContainer.innerHTML = `
+                    <p><strong>Career Interest:</strong> ${userDetails.careerInterest}</p>
+                    <p><strong>Experience Level:</strong> ${userDetails.experienceLevel}</p>
+                    <p><strong>Skills:</strong> ${userDetails.skills}</p>
+                `;
+
+                // Generate dynamic recommendation
+                const recommendationContainer = document.getElementById('careerRecommendation');
+                const skillRoadmapContainer = document.getElementById('skillRoadmap');
+                
+                let recommendationTitle = 'Data Scientist';
+                let recommendationText = `Based on your interest in ${userDetails.careerInterest} and your skills in ${userDetails.skills}, a career as a Data Scientist could be a great fit.`;
+                let roadmap = [
+                    'Advanced Python (Pandas, NumPy)',
+                    'Machine Learning (Scikit-learn, TensorFlow)',
+                    'Big Data Technologies (Spark, Hadoop)'
+                ];
+
+                if (userDetails.skills.toLowerCase().includes('javascript') || userDetails.skills.toLowerCase().includes('react')) {
+                    recommendationTitle = 'Frontend Developer';
+                    recommendationText = `With your skills in ${userDetails.skills}, a career as a Frontend Developer is a strong match. You'll build the user-facing parts of websites and applications.`;
+                    roadmap = [
+                        'Advanced JavaScript (React, Vue.js)',
+                        'State Management (Redux, Zustand)',
+                        'UI/UX Design Principles'
+                    ];
+                }
+
+                recommendationContainer.innerHTML = `
+                    <h5 class="card-title">${recommendationTitle}</h5>
+                    <p class="card-text">${recommendationText}</p>
+                `;
+                
+                skillRoadmapContainer.innerHTML = roadmap.map(skill => `<li>${skill}</li>`).join('');
+
+                // Clear localStorage after use
+                localStorage.removeItem('userDetails');
+            }
+
+            // Simulate AI processing time
+            setTimeout(() => {
+                document.getElementById('processing').style.display = 'none';
+                document.getElementById('results').style.display = 'block';
+            }, 3000); // 3 second delay
+        });
+    </script>
+</body>
+</html>
