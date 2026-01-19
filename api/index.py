@@ -65,13 +65,16 @@ def process_profile(profile: UserProfile, background_tasks: BackgroundTasks):
 
     try:
         # 1. Call Relay (Critical Path - User waits for this)
-        # relay_response = requests.post(RELAY_WEBHOOK_URL, json=payload, timeout=300)
-        # relay_response.raise_for_status()
-        # ai_output = relay_response.json()
+        RELAY_WEBHOOK_URL = os.environ.get("RELAY_WEBHOOK_URL", "https://hook.relay.app/api/v1/playbook/cmkcw26uw04yp0pm7532kcmj1/trigger/gmkPhlQTNp7YMqvJNkebzw")
+        
+        print(f"Connecting to Relay: {RELAY_WEBHOOK_URL}...")
+        relay_response = requests.post(RELAY_WEBHOOK_URL, json=payload, timeout=300)
+        relay_response.raise_for_status()
+        ai_output = relay_response.json()
 
         # FORCE MOCK DATA (User out of credits / Debug Mode)
-        print("Using Mock Data (Forced Mode)")
-        ai_output = MOCK_DATA
+        # print("Using Mock Data (Forced Mode)")
+        # ai_output = MOCK_DATA
 
         # 2. Schedule DB save in background (Non-blocking)
         background_tasks.add_task(save_data_to_db, payload, ai_output)
