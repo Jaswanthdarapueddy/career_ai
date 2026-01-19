@@ -1,3 +1,9 @@
 node_modules/
 dist/
 .env
+venv/
+api/venv/
+__pycache__/
+.DS_Store
+.vscode/
+*.pyc
