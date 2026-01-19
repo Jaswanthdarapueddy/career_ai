@@ -5,7 +5,12 @@ import requests
 import os
 from dotenv import load_dotenv
 
-from supabase_client import store_user_profile, store_ai_output
+try:
+    from supabase_client import store_user_profile, store_ai_output
+except ImportError:
+    print("Warning: Supabase client could not be imported. Usage will use Mock Data only.")
+    def store_user_profile(data): return None
+    def store_ai_output(uid, data): return None
 
 load_dotenv()
 
